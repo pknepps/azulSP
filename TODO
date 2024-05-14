@@ -1,0 +1,8 @@
+make factories (lol factory factory)
+- These should align in a circle and density based off the number of factories (number of players)
+make boards
+- must have the pattern and floor lines and wall
+- wall must have congruent pattern
+    - optional gamemode optional
+- score counter can simply be number.
+- floor and pattern lines can be separate piece from wall to allow for more fitting layouts

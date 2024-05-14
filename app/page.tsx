@@ -10,6 +10,7 @@ export default function Home() {
   useEffect(() => {
     setIsClient(true)
   }, [])
+
   return (
     <main className={styles.main}>
       <div className={styles.description}>
@@ -97,20 +98,18 @@ export default function Home() {
       </div>
     </main>
   );
+}
 
-  function hello() {
-    const [time, setTime] = useState(new Date());
+function hello() {
+  const [time, setTime] = useState(new Date());
 
-    useEffect(() => {
-      const interval = setInterval(() => {
-        setTime(new Date());
-      }, 1000);
-    
-      return () => clearInterval(interval);
-    }, []);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  
+    return () => clearInterval(interval);
+  }, []);
 
-    return (<p>{(Math.floor(new Date().getTime() / 1000)) % 2 === 0 ? "Hello World!" : "I have become sentient."}</p>);
-  }
-
-
+  return (<p>{(Math.floor(new Date().getTime() / 1000)) % 2 === 0 ? "Hello World!" : "I have become sentient."}</p>);
 }
