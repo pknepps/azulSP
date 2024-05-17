@@ -1,8 +1,7 @@
 "use client"
 
-import Image from "next/image";
 import styles from "./page.module.css";
-import {GameCenter} from "./ui/gameCenter"
+import {GameCenter} from "@/app/ui/gameCenter"
 import {ReactElement } from "react";
 
 export default function Home() : ReactElement | null {

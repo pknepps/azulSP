@@ -1,39 +1,6 @@
-import styles from "./gameCenter.module.css"
-import {ReactElement, ReactNode, useState, useEffect} from "react";
-
-/**
- * A custom hook which retrieves the dimensions of the current window, with each dimension being
- * null if no browser instance exists.
- * @returns an object with 2 number fields: height and width, being the height and width of the
- *      window respectively.
- */
-export default function useWindowDimensions() : {width: number | null, height: number | null} {
-    const hasWindow = typeof window !== 'undefined';
-
-    function getWindowDimensions() : {width: number | null, height: number | null} {
-        const width = hasWindow ? window.innerWidth : null;
-        const height = hasWindow ? window.innerHeight : null;
-        return {
-            width,
-            height,
-        };
-    }
-
-    const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-
-    useEffect(() => {
-        if (hasWindow) {
-            let handleResize = () => {
-                setWindowDimensions(getWindowDimensions());
-            }
-
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
-        }
-    }, [hasWindow, getWindowDimensions]);
-
-    return windowDimensions;
-}
+import styles from "@app/ui/gameCenter.module.css"
+import {ReactElement, ReactNode} from "react";
+import useWindowDimensions from "@/app/ui/customHooks/useWindowDimensions";
 
 /**
  * The center of the game. The center contains all tiles which have yet to be drafted. These tiles
@@ -53,7 +20,7 @@ export function GameCenter(props : number[]) : ReactElement | null {
 }
 
 /**
- * Test function
+ * Test function. creates a circle from the given int.
  */
 export function Circle(num : number, angle : number) : ReactNode {
     let {width, height} = useWindowDimensions();
