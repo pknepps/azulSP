@@ -1,5 +1,5 @@
-.tile {
+.squareTile {
     height: 40px;
     width: 40px;
-    border-radius: 5%;
+    border-radius: 10%;
 }

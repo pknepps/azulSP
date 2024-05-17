@@ -2,6 +2,7 @@ import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
 import {TileColor} from "@/app/ui/Tiles/TileColor";
+import Tile from "@/app/ui/Tiles/tile";
 
 /**
  * Temp method
@@ -10,16 +11,12 @@ const pickTileTest = () : ReactElement[] => {
     const colors = [TileColor.red, TileColor.blue, TileColor.black, TileColor.yellow];
     let cnt = 0;
     return colors.map((x : TileColor) : ReactElement => {
-        const row = Math.floor(cnt / 2) + 1;
         const col = (cnt % 2) + 1;
+        const row = Math.floor(cnt / 2) + 1;
         cnt++;
-        return <button onClick={() => alert("my color is: " + x)}
-                       className={styles.tile}
-                       style={{backgroundColor: x,
-                               gridColumnStart: col,
-                               gridRowStart: row}} key={x}></button>
+        return Tile(x, col, row);
     });
-}
+};
 
 /**
  * The center of the game. The center contains all tiles which have yet to be drafted. These tiles
