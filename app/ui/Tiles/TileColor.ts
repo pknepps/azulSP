@@ -1,8 +1,8 @@
 
 export const enum TileColor {
-    white,
-    black,
-    red,
-    yellow,
-    blue,
+    white = "white",
+    black = "black",
+    red = "red",
+    yellow = "yellow",
+    blue = "blue",
 }

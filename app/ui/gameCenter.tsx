@@ -1,6 +1,25 @@
 import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
-import useWindowDimensions from "@/app/ui/customHooks/useWindowDimensions";
+import Factory from "@/app/ui/Factory/factory";
+import {TileColor} from "@/app/ui/Tiles/TileColor";
+
+/**
+ * Temp method
+ */
+const pickTileTest = () : ReactElement[] => {
+    const colors = [TileColor.red, TileColor.blue, TileColor.black, TileColor.yellow];
+    let cnt = 0;
+    return colors.map((x : TileColor) : ReactElement => {
+        const row = Math.floor(cnt / 2) + 1;
+        const col = (cnt % 2) + 1;
+        cnt++;
+        return <button onClick={() => alert("my color is: " + x)}
+                       className={styles.tile}
+                       style={{backgroundColor: x,
+                               gridColumnStart: col,
+                               gridRowStart: row}} key={x}></button>
+    });
+}
 
 /**
  * The center of the game. The center contains all tiles which have yet to be drafted. These tiles
@@ -12,24 +31,9 @@ import useWindowDimensions from "@/app/ui/customHooks/useWindowDimensions";
  */
 export function GameCenter(props : number[]) : ReactElement | null {
     let cnt = 0;
-    const elements : ReactNode[] = props.map((x : number) : ReactNode => {
+    const elements : ReactNode[] = props.map(() : ReactNode => {
         const angle = cnt++ * (2 * Math.PI) / props.length;
-        return Circle(x, angle);
+        return Factory(pickTileTest, angle);
     });
-    return (<div className={styles.gameCenter}> {elements} </div>)
+    return (<div className={styles.gameCenter}> {elements} </div>);
 }
-
-/**
- * Test function. creates a circle from the given int.
- */
-export function Circle(num : number, angle : number) : ReactNode {
-    let {width, height} = useWindowDimensions();
-    if (width == null || height == null) {
-        return <div></div>;
-    }
-    const radius = Math.min(height, width) / 3;
-    const verticalOffset = height / 2;
-    const horizontalOffset = width / 2;
-    return <div className={styles.circle} style = {{position : "absolute", right: (Math.cos(angle) * radius + horizontalOffset), top: ((Math.sin(angle) * radius) + verticalOffset)}} key={num}> {num} </div>;
-}
-
