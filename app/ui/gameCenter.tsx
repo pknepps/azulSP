@@ -1,4 +1,4 @@
-import styles from "@app/ui/gameCenter.module.css"
+import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import useWindowDimensions from "@/app/ui/customHooks/useWindowDimensions";
 

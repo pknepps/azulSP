@@ -1,10 +1,4 @@
-.gameCenter {
-    display: flex;
-    width: 100%;
-    height: 100%;
-}
-
-.circle {
+.factory {
     height: 150px;
     width: 150px;
     background-color: #bbb;
