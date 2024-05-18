@@ -1,6 +1,6 @@
-import {ReactElement} from "react";
+import {ReactElement, useEffect, useState} from "react";
 import styles from "./factory.module.css";
-import useWindowDimensions from "@/app/ui/customHooks/useWindowDimensions";
+import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
 
 /**
  * A board element which holds 4 tiles. The tiles on a factory have yet to be drafted, and once one
@@ -13,7 +13,8 @@ import useWindowDimensions from "@/app/ui/customHooks/useWindowDimensions";
  * @returns An html element which holds 4 tiles.
  */
 export default function Factory(pickTiles : () => ReactElement[], angle : number) : ReactElement | null {
-    let {width, height} = useWindowDimensions();
+    const {width, height} = useWindowDimensions();
+
     if (width == null || height == null) {
         return <div></div>;
     }
@@ -21,6 +22,7 @@ export default function Factory(pickTiles : () => ReactElement[], angle : number
     const radius = Math.min(height, width) / 3;
     const verticalOffset = height / 2;
     const horizontalOffset = width / 2;
+
     return (<div className={styles.factory}
                 style = {{position: "absolute",
                           right: (Math.cos(angle) * radius + horizontalOffset - factoryRadius),
