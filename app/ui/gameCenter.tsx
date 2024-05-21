@@ -1,8 +1,8 @@
 import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
-import {TileColor} from "@/app/ui/Tiles/TileColor";
-import Tile from "@/app/ui/Tiles/tile";
+import {TileColor} from "@/app/ui/Tile/TileColor";
+import Tile from "@/app/ui/Tile/tile";
 
 /**
  * Temp method
