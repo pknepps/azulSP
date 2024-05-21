@@ -1,0 +1,23 @@
+.board {
+    aspect-ratio: 2 / 1;
+    display: inline-grid;
+    width: 100%;
+    grid-auto-columns: 50%;
+    grid-column-gap: 1px;
+    align-self: flex-start;
+}
+
+.boardHalf {
+    height: 100%;
+    aspect-ratio: 1 / 1;
+    width: fit-content;
+    grid-row-start: 1;
+    display: inline-grid;
+    grid-auto-columns: 20%;
+    grid-auto-rows: 20%;
+    border-width: 3px;
+    border-color: black;
+    border-style: solid;
+    grid-row-gap: 2%;
+    grid-column-gap: 2%;
+}

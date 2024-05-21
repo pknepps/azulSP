@@ -2,7 +2,7 @@ import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
 import {TileColor} from "@/app/ui/Tile/TileColor";
-import Tile from "@/app/ui/Tile/tile";
+import SquareTile from "@/app/ui/Tile/tile";
 
 /**
  * Temp method
@@ -14,7 +14,7 @@ const pickTileTest = () : ReactElement[] => {
         const col = (cnt % 2) + 1;
         const row = Math.floor(cnt / 2) + 1;
         cnt++;
-        return Tile(x, col, row);
+        return SquareTile(x, col, row);
     });
 };
 

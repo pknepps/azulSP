@@ -5,4 +5,5 @@ export const enum TileColor {
     red = "red",
     yellow = "yellow",
     blue = "blue",
+    empty = "empty"
 }

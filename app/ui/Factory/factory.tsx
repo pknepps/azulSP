@@ -1,4 +1,4 @@
-import {ReactElement, useEffect, useState} from "react";
+import {ReactElement} from "react";
 import styles from "./factory.module.css";
 import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
 
