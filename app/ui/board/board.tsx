@@ -30,12 +30,28 @@ export default function SquareBoard() : ReactElement | null{
         return tiles;
     }
 
+    let makeFloor = () : Array<ReactElement | null> => {
+        let scores = [-1, -1, -2, -2, -2, -3, -3];
+        let elements = new Array<ReactElement | null>
+        for (let i = 0; i < scores.length; i++) {
+            elements.push(<div className={styles.floorText} style={{gridColumnStart: i + 1}}>
+                {scores[i]}
+            </div>);
+            elements.push(SquareTile(TileColor.empty, i + 1, 1));
+        }
+        return elements;
+    }
+
     return (<div className={styles.board}>
-        <div className={styles.boardHalf} style={{gridColumnStart : 1}}>
+        <div className={styles.score}>121</div>
+        <div className={styles.boardHalf} style={{gridColumnStart: 1}}>
             {makePattern()}
         </div>
         <div className={styles.boardHalf} style={{gridColumnStart : 2}}>
             {makeWall()}
+        </div>
+        <div className={styles.floor}>
+            {makeFloor()}
         </div>
     </div>);
 }

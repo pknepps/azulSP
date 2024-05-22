@@ -1,17 +1,19 @@
-make factories (lol factory factory)
-- These should align in a circle and density based off the number of factories (number of players)
 make tiles
-- these should be buttons
+x these should be buttons
 - on first click, moves tiles to player and remaining tiles to center
 - on second click, only moves tiles to player
 - on hover, shows other tiles which will be taken.
 - in original game, requires second click on pattern line.
     - on hover, shows pattern line fill with number of tiles.
 make boards
-- must have the pattern and floor lines and wall
-- wall must have congruent pattern
-    - optional gamemode optional
-- score counter can simply be number.
-- floor and pattern lines can be separate piece from wall to allow for more fitting layouts
+x must have the pattern and floor lines and wall
+x wall must have congruent pattern
+x score counter can simply be number.
+- wall should have translucent tiles to represent that there are not tiles there.
+- when colored in, tiles should be disable for clicking.
+make center
+- flex which automatically starts a new row after 5 tiles enter the center
+- leftover tiles should go here
+- should start with the '1' tile.
 make menu
 - options between both games
