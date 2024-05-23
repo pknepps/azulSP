@@ -16,10 +16,9 @@
   z-index: 2;
 }
 
-.left {
+.side {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: stretch;
-    width: 30%;
+    padding: 20px;
 }

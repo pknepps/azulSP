@@ -4,8 +4,11 @@ import {TileColor} from "@/app/ui/Tile/TileColor";
 import SquareTile from "@/app/ui/Tile/tile"
 
 /**
- *
- * @constructor
+ * A player's board. Each player has their own board with identical walls, patterns and floor. The
+ * players place tiles onto the pattern line which move to the wall in the respective row if filled
+ * during the scoring phase. The floor is where overflow tiles go. All tiles on the floor in the
+ * scoring phase count as negative points. A player can never drop below zero points.
+ * @returns A board with 4 sections. The player's score, pattern lines, wall, and floor.
  */
 export default function SquareBoard() : ReactElement | null{
     let makePattern = () : Array<ReactElement | null> => {
@@ -21,11 +24,11 @@ export default function SquareBoard() : ReactElement | null{
     let makeWall = () : Array<ReactElement | null> => {
         let tiles = new Array<ReactElement | null>();
         for (let i = 1; i <= 5; i++) {
-            tiles.push(SquareTile(TileColor.blue, i, i));
-            tiles.push(SquareTile(TileColor.yellow, i % 5 + 1, i));
-            tiles.push(SquareTile(TileColor.red, (i + 1) % 5 + 1, i));
-            tiles.push(SquareTile(TileColor.black, (i + 2)% 5 + 1, i));
-            tiles.push(SquareTile(TileColor.white, (i + 3)% 5 + 1, i));
+            tiles.push(SquareTile(TileColor.blue, i, i, true));
+            tiles.push(SquareTile(TileColor.yellow, i % 5 + 1, i, true));
+            tiles.push(SquareTile(TileColor.red, (i + 1) % 5 + 1, i, true));
+            tiles.push(SquareTile(TileColor.black, (i + 2)% 5 + 1, i, true));
+            tiles.push(SquareTile(TileColor.white, (i + 3)% 5 + 1, i, true));
         }
         return tiles;
     }
@@ -47,7 +50,7 @@ export default function SquareBoard() : ReactElement | null{
         <div className={styles.boardHalf} style={{gridColumnStart: 1}}>
             {makePattern()}
         </div>
-        <div className={styles.boardHalf} style={{gridColumnStart : 2}}>
+        <div className={styles.boardHalf} style={{gridColumnStart: 2, pointerEvents:"none"}}>
             {makeWall()}
         </div>
         <div className={styles.floor}>
