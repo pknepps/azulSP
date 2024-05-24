@@ -2,15 +2,15 @@ import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
 import {TileColor} from "@/app/ui/Tile/TileColor";
-import SquareTile from "@/app/ui/Tile/tile";
+import {FirstPlayerSquareTile, SquareTile} from "@/app/ui/Tile/tile";
 
 /**
  * Temp method
  */
-const pickTileTest = () : ReactElement[] => {
+const pickTileTest = () : (ReactElement | null)[] => {
     const colors = [TileColor.red, TileColor.blue, TileColor.black, TileColor.yellow];
     let cnt = 0;
-    return colors.map((x : TileColor) : ReactElement => {
+    return colors.map((x : TileColor) : ReactElement | null => {
         const col = (cnt % 2) + 1;
         const row = Math.floor(cnt / 2) + 1;
         cnt++;
@@ -35,7 +35,16 @@ export function GameCenter(props : number[]) : ReactElement | null {
     return (<div className={styles.gameCenter}>
         {elements}
         <div className={styles.boardCenter}>
-
+            {FirstPlayerSquareTile()}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
+            {SquareTile(TileColor.white, 0, 0)}
         </div>
     </div>);
 }

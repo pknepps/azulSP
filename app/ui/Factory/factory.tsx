@@ -12,7 +12,7 @@ import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
  * @param angle The angle to place this factory on.
  * @returns An html element which holds 4 tiles.
  */
-export default function Factory(pickTiles : () => ReactElement[], angle : number) : ReactElement | null {
+export default function Factory(pickTiles : () => (ReactElement | null)[], angle : number) : ReactElement | null {
     const {width, height} = useWindowDimensions();
 
     if (width == null || height == null) {

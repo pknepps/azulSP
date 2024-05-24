@@ -1,7 +1,7 @@
 import styles from "./board.module.css";
 import {ReactElement} from "react";
 import {TileColor} from "@/app/ui/Tile/TileColor";
-import SquareTile from "@/app/ui/Tile/tile"
+import {SquareTile} from "@/app/ui/Tile/tile"
 
 /**
  * A player's board. Each player has their own board with identical walls, patterns and floor. The
