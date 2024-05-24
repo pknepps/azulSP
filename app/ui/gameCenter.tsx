@@ -32,5 +32,10 @@ export function GameCenter(props : number[]) : ReactElement | null {
         const angle = cnt++ * (2 * Math.PI) / props.length + 3 * Math.PI / 2;
         return Factory(pickTileTest, angle);
     });
-    return (<div className={styles.gameCenter}> {elements} </div>);
+    return (<div className={styles.gameCenter}>
+        {elements}
+        <div className={styles.boardCenter}>
+
+        </div>
+    </div>);
 }
