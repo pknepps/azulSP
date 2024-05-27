@@ -17,12 +17,12 @@ import {TileBag} from "@/app/tilebag/TileBag";
 export function GameCenter(props : number[]) : ReactElement | null {
     let cnt = 0;
     let tileBag: TileBag = new SquareTileBag();
-    const elements : ReactNode[] = props.map(() : ReactNode => {
+    const factories : ReactNode[] = props.map(() : ReactNode => {
         const angle = cnt++ * (2 * Math.PI) / props.length + 3 * Math.PI / 2;
         return Factory(tileBag.drawTile, angle);
     });
     return (<div className={styles.gameCenter}>
-        {elements}
+        {factories}
         <div className={styles.boardCenter}>
             {FirstPlayerSquareTile()}
         </div>
