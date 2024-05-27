@@ -9,11 +9,11 @@ make boards
 x must have the pattern and floor lines and wall
 x wall must have congruent pattern
 x score counter can simply be number.
-- wall should have translucent tiles to represent that there are not tiles there.
-- when colored in, tiles should be disable for clicking.
+x wall should have translucent tiles to represent that there are not tiles there.
+x when colored in, tiles should be disable for clicking.
 make center
-- flex which automatically starts a new row after 5 tiles enter the center
+x flex which automatically starts a new row after 5 tiles enter the center
 - leftover tiles should go here
-- should start with the '1' tile.
+x should start with the '1' tile.
 make menu
 - options between both games
