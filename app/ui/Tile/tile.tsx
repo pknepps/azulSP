@@ -10,8 +10,11 @@ import {TileColor} from "@/app/ui/Tile/TileColor";
  * @param disabled If the tile should be clickable.
  * @returns A tile which is a button.
  */
-export function SquareTile(color : TileColor, column : number, row : number,
+export function SquareTile(color : TileColor | undefined, column : number, row : number,
                                    disabled = false) : ReactElement | null {
+    if (color === undefined) {
+        color = TileColor.empty;
+    }
     const [isDisabled, setDisabled] = useState(disabled);
     return (<button onClick={() => alert("my color is: " + color)}
                    className={styles.squareTile}

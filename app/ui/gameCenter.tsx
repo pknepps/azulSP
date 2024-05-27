@@ -3,20 +3,8 @@ import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
 import {TileColor} from "@/app/ui/Tile/TileColor";
 import {FirstPlayerSquareTile, SquareTile} from "@/app/ui/Tile/tile";
-
-/**
- * Temp method
- */
-const pickTileTest = () : (ReactElement | null)[] => {
-    const colors = [TileColor.red, TileColor.blue, TileColor.black, TileColor.yellow];
-    let cnt = 0;
-    return colors.map((x : TileColor) : ReactElement | null => {
-        const col = (cnt % 2) + 1;
-        const row = Math.floor(cnt / 2) + 1;
-        cnt++;
-        return SquareTile(x, col, row);
-    });
-};
+import {SquareTileBag} from "@/app/tilebag/SquareTileBag";
+import {TileBag} from "@/app/tilebag/TileBag";
 
 /**
  * The center of the game. The center contains all tiles which have yet to be drafted. These tiles
@@ -28,23 +16,15 @@ const pickTileTest = () : (ReactElement | null)[] => {
  */
 export function GameCenter(props : number[]) : ReactElement | null {
     let cnt = 0;
+    let tileBag: TileBag = new SquareTileBag();
     const elements : ReactNode[] = props.map(() : ReactNode => {
         const angle = cnt++ * (2 * Math.PI) / props.length + 3 * Math.PI / 2;
-        return Factory(pickTileTest, angle);
+        return Factory(tileBag.drawTile, angle);
     });
     return (<div className={styles.gameCenter}>
         {elements}
         <div className={styles.boardCenter}>
             {FirstPlayerSquareTile()}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
-            {SquareTile(TileColor.white, 0, 0)}
         </div>
     </div>);
 }

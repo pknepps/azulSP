@@ -12,7 +12,9 @@ import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
  * @param angle The angle to place this factory on.
  * @returns An html element which holds 4 tiles.
  */
-export default function Factory(pickTiles : () => (ReactElement | null)[], angle : number) : ReactElement | null {
+export default function Factory(pickTiles : (row: number, col: number) => (ReactElement | null),
+                                angle : number) : ReactElement | null {
+
     const {width, height} = useWindowDimensions();
 
     if (width == null || height == null) {
@@ -23,12 +25,17 @@ export default function Factory(pickTiles : () => (ReactElement | null)[], angle
     const verticalOffset = height / 2;
     const horizontalOffset = width / 2;
 
+    const coordinates: [number, number][] = [[1, 1], [1, 2], [2, 1], [2, 2]];
+    const tiles = coordinates .map(
+        (coordinate : [number, number]) : ReactElement | null =>
+            pickTiles(coordinate[0], coordinate[1]));
+
     return (<div className={styles.factory}
                 style = {{position: "absolute",
                           right: (Math.cos(angle) * radius + horizontalOffset - factoryRadius),
                           top: ((Math.sin(angle) * radius) + verticalOffset - factoryRadius)}}>
         <div className={styles.factoryContents}>
-            {pickTiles()}
+            {tiles}
         </div>
     </div>);
 }
