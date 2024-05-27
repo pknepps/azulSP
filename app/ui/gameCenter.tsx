@@ -1,8 +1,7 @@
 import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
-import {TileColor} from "@/app/ui/Tile/TileColor";
-import {FirstPlayerSquareTile, SquareTile} from "@/app/ui/Tile/tile";
+import {FirstPlayerSquareTile} from "@/app/ui/Tile/tile";
 import {SquareTileBag} from "@/app/tilebag/SquareTileBag";
 import {TileBag} from "@/app/tilebag/TileBag";
 
