@@ -1,0 +1,19 @@
+.gameCenter {
+    display: flex;
+    height: 100%;
+    aspect-ratio: 1/1;
+}
+
+.boardCenter {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 33%;
+    display: flex;
+    aspect-ratio: 1/1;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+}

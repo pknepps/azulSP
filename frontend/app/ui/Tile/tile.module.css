@@ -1,0 +1,14 @@
+.squareTile {
+    height: 40px;
+    width: 40px;
+    border-radius: 10%;
+    opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+}
+
+.squareTile:disabled {
+    opacity: 0.5;
+}
