@@ -1,6 +1,7 @@
 use crate::game::tile::{self, ColoredTile};
 use rand::Rng;
 use strum::IntoEnumIterator;
+use crate::game::DiscardTiles;
 
 /// The number of tiles of a color that exist in the game.
 pub const MAX_TILES_OF_COLOR: usize = 20;
@@ -56,11 +57,6 @@ impl Bag {
         self.tiles.pop()
     }
 
-    /// Puts the given tile into the discard for reuse.
-    pub fn discard(&mut self, tile: ColoredTile) {
-        self.discard.push(tile);
-    }
-
     /// Shuffles the discard into the bag.
     fn shuffle(&mut self) {
         while let Some(tile) = self.discard.pop() {
@@ -72,5 +68,12 @@ impl Bag {
             let rnd_index = rand::thread_rng().gen_range(0..self.tiles.len());
             (self.tiles[i], self.tiles[rnd_index]) = (self.tiles[rnd_index], self.tiles[i]);
         }
+    }
+}
+
+impl DiscardTiles for Bag {
+    /// Puts the given tile into the discard for reuse.
+    fn discard(&mut self, tile: ColoredTile) {
+        self.discard.push(tile);
     }
 }

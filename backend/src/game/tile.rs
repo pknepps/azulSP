@@ -1,3 +1,5 @@
+use std::error::Error;
+use std::fmt::{self, Display};
 use std::hash::{Hash, Hasher};
 use strum_macros::EnumIter;
 
@@ -10,6 +12,17 @@ pub enum Color {
     Red,
     Yellow,
 }
+
+#[derive(Debug)]
+pub struct ColorDoesNotExist;
+
+impl Display for ColorDoesNotExist {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "The given color does not exist.")
+    }
+}
+
+impl Error for ColorDoesNotExist {}
 
 /// The Tile is the main game piece. A tile can be 5 colors, represented by
 /// this enum. Throughout the game, tiles are drafted by players and used to

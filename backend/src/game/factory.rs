@@ -1,5 +1,9 @@
-use crate::game::{bag::Bag, tile::ColoredTile, ColorDoesNotExist, center::Center, PickTiles};
+use crate::game::bag::Bag;
+use crate::game::tile::{ColoredTile, ColorDoesNotExist, Tile};
+use crate::game::center::Center;
+use crate::game::PickTiles;
 use std::error::Error;
+use std::fmt::{Display, Formatter};
 use std::slice::Iter;
 
 // The max number of tiles a factory can hold.
@@ -9,7 +13,13 @@ const FACTORY_MAX: usize = 4;
 #[derive(Debug)]
 pub struct FactoryNotEmpty;
 
-// TODO: impl error for the above
+impl Display for FactoryNotEmpty {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        write!(f, "Factory is not empty.")
+    }    
+}
+
+impl Error for FactoryNotEmpty {}
 
 /// A factory holds 4 tiles which can be drafted by the players. A factory will
 /// pull its tiles from the bag. Once all factories are empty, the game will go
@@ -43,7 +53,7 @@ impl PickTiles for Factory {
     /// Removes all tiles and returns all tiles of the given color.
     /// The remaining tiles are discarded to the given center.
     /// If no tiles of the given color exist, returns an error.
-    fn pick(&mut self, tile: &ColoredTile) -> Result<Iter<ColoredTile>, ColorDoesNotExist> {
+    fn pick(&mut self, tile: &ColoredTile) -> Result<Iter<Box<dyn Tile>>, ColorDoesNotExist> {
         let chosen_tiles = Vec::new();
         todo!();
         if chosen_tiles.is_empty() {
