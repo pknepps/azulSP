@@ -1,8 +1,6 @@
-use crate::game::bag::Bag;
-use crate::game::tile::ColoredTile;
+use crate::game::{bag::Bag, tile::ColoredTile, ColorDoesNotExist, center::Center, PickTiles};
 use std::error::Error;
 use std::slice::Iter;
-use crate::game::center::Center;
 
 // The max number of tiles a factory can hold.
 const FACTORY_MAX: usize = 4;
@@ -10,8 +8,6 @@ const FACTORY_MAX: usize = 4;
 /// Error for if the factory is not empty and should be.
 #[derive(Debug)]
 pub struct FactoryNotEmpty;
-
-pub struct ColorDoesNotExist;
 
 // TODO: impl error for the above
 
@@ -41,10 +37,13 @@ impl Factory {
         Ok(())
     }
 
+}
+
+impl PickTiles for Factory {
     /// Removes all tiles and returns all tiles of the given color.
     /// The remaining tiles are discarded to the given center.
     /// If no tiles of the given color exist, returns an error.
-    pub fn pick(&mut self, tile: &ColoredTile, center: &mut Center) -> Result<Iter<ColoredTile>, ColorDoesNotExist> {
+    fn pick(&mut self, tile: &ColoredTile) -> Result<Iter<ColoredTile>, ColorDoesNotExist> {
         let chosen_tiles = Vec::new();
         todo!();
         if chosen_tiles.is_empty() {
@@ -52,6 +51,4 @@ impl Factory {
         }
         Ok(chosen_tiles.iter())
     }
-
-
 }

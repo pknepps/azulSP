@@ -1,7 +1,8 @@
+use std::hash::{Hash, Hasher};
 use strum_macros::EnumIter;
 
 /// The possible colors of tiles.
-#[derive(PartialEq, Clone, Copy, EnumIter)]
+#[derive(PartialEq, Clone, Copy, EnumIter, Hash, Eq)]
 pub enum Color {
     White,
     Black,
@@ -30,6 +31,11 @@ impl ColoredTile {
     /// Tests if the tile is of the given color.
     pub fn is_color(&self, color: &Color) -> bool {
         self.color == *color
+    }
+
+    /// Gets the color of this tile.
+    pub fn color(&self) -> Color {
+        self.color
     }
 }
 
