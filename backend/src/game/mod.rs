@@ -11,7 +11,7 @@ pub mod tile;
 /// Allows the user to pick tiles from a type of this trait.
 pub trait PickTiles {
     /// Picks all tiles of the given color.
-    fn pick(&mut self, tile: &ColoredTile) -> Result<Iter<Box<dyn Tile>>, ColorDoesNotExist>;
+    fn pick(&mut self, tile: &ColoredTile) -> Result<Vec<Box<dyn Tile>>, ColorDoesNotExist>;
 }
 
 /// Allows the discard of a tile to a type of this trait.

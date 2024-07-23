@@ -27,7 +27,9 @@ impl Error for ColorDoesNotExist {}
 /// The Tile is the main game piece. A tile can be 5 colors, represented by
 /// this enum. Throughout the game, tiles are drafted by players and used to
 /// score.
-pub trait Tile {}
+pub trait Tile {
+    fn is_color(&self, color: &Color) -> bool;
+}
 
 /// The primary tile in the game.
 #[derive(Clone, Copy, PartialEq)]
@@ -41,20 +43,24 @@ impl ColoredTile {
         ColoredTile { color, }
     }
 
-    /// Tests if the tile is of the given color.
-    pub fn is_color(&self, color: &Color) -> bool {
-        self.color == *color
-    }
-
     /// Gets the color of this tile.
     pub fn color(&self) -> Color {
         self.color
     }
 }
 
-impl Tile for ColoredTile {}
+impl Tile for ColoredTile {
+    /// Tests if the tile is of the given color.
+    fn is_color(&self, color: &Color) -> bool {
+        self.color == *color
+    }
+}
 
 /// The first-player tile, which marks who gets to play first next round.
 pub struct FirstPlayerTile;
 
-impl Tile for FirstPlayerTile {}
+impl Tile for FirstPlayerTile {
+    fn is_color(&self, _color: &Color) -> bool {
+        true
+    }
+}

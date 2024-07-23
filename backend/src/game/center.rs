@@ -1,5 +1,4 @@
 use strum::IntoEnumIterator;
-use std::collections::HashMap;
 use std::slice::Iter;
 use crate::game::{DiscardTiles, PickTiles};
 use crate::game::tile::{ColorDoesNotExist, Color, ColoredTile, FirstPlayerTile};
@@ -8,42 +7,45 @@ use crate::game::tile::Tile;
 /// The center of the play area which contains the leftover tiles from
 /// factories as well as the first-player token until chosen from.
 pub struct Center {
-    tiles: HashMap<Color, Vec<Box<dyn Tile>>>,
-    first_player_tile: Option<FirstPlayerTile>,
+    tiles: Vec<Box<dyn Tile>>,
+    has_first_player_tile: bool,
 }
 
 impl Center {
     /// Creates a new center with no colored-tiles and one first_player_tile.
     pub fn new() -> Center {
-        let mut tiles = HashMap::new();
-        for color in Color::iter() {
-            tiles.insert(color, Vec::new());
-        }
+        let mut tiles: Vec<Box<dyn Tile>> = Vec::new();
+        tiles.push(Box::new(FirstPlayerTile));
         Center {
             tiles,
-            first_player_tile: Some(FirstPlayerTile),
+            has_first_player_tile: true,
         }
     }
 }
 
 impl PickTiles for Center {
-    /// Picks all tiles of the given color, adding on the first-player tile, if it exists.
-    fn pick(&mut self, tile: &ColoredTile) -> Result<Iter<Box<dyn Tile>>, ColorDoesNotExist> {
-        let tiles = self.tiles.get(&tile.color()).unwrap();
-        if tiles.is_empty() {
-            return Err(ColorDoesNotExist)
+    /// Picks all tiles of the given color, adding on the first-player tile,
+    /// if it exists.
+    fn pick(&mut self, tile: &ColoredTile) -> Result<Vec<Box<dyn Tile>>, ColorDoesNotExist> {
+        let mut match_cnt = 0;
+        let mut tiles = Vec::new();
+        for i in 0..self.tiles.len() {
+            if self.tiles[i - match_cnt].is_color(&tile.color()) {
+                tiles.push(self.tiles.remove(i));
+                match_cnt += 1;
+            }
         }
-        if let Some(_) = &self.first_player_tile {
-            tiles.push(Box::new(FirstPlayerTile));
-            self.first_player_tile = None;
+        if tiles.is_empty() || (self.has_first_player_tile && match_cnt == 1) {
+            return Err(ColorDoesNotExist);
         }
-        Ok(tiles.iter())
+        self.has_first_player_tile = false;
+        Ok(tiles)
     }
 }
 
 impl DiscardTiles for Center {
     /// Discards the given tile to this Center.
     fn discard(&mut self, tile: ColoredTile) {
-        self.tiles.get_mut(&tile.color()).unwrap().push(Box::new(tile));
+        self.tiles.push(Box::new(tile));
     }
 }

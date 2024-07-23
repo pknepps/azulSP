@@ -53,12 +53,7 @@ impl PickTiles for Factory {
     /// Removes all tiles and returns all tiles of the given color.
     /// The remaining tiles are discarded to the given center.
     /// If no tiles of the given color exist, returns an error.
-    fn pick(&mut self, tile: &ColoredTile) -> Result<Iter<Box<dyn Tile>>, ColorDoesNotExist> {
-        let chosen_tiles = Vec::new();
+    fn pick(&mut self, tile: &ColoredTile) -> Result<Vec<Box<dyn Tile>>, ColorDoesNotExist> {
         todo!();
-        if chosen_tiles.is_empty() {
-            return Err(ColorDoesNotExist);
-        }
-        Ok(chosen_tiles.iter())
     }
 }
