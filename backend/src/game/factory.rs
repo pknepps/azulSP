@@ -55,12 +55,15 @@ impl PickTiles for Factory {
     /// If no tiles of the given color exist, returns an error.
     fn pick(&mut self, tile: &ColoredTile) -> Result<Vec<Box<dyn Tile>>, ColorDoesNotExist> {
         let mut tiles: Vec<Box<dyn Tile>> = Vec::new();
-        while let Some(factory_tile) = self.tiles.pop() {
-            if factory_tile.is_color(tile.color()) {
-                tiles.push(factory_tile);
-            } else {
-                self.center.discard(factory_tile);
-            }
+         for factory_tile in self.tiles {
+             let Some(factory_tile) = factory_tile else {
+                 continue;
+             };
+             if factory_tile.is_color(&tile.color()) {
+                 tiles.push(Box::new(factory_tile));
+             } else {
+                 self.center.discard(factory_tile);
+             }
         }
         if tiles.is_empty() {
             return Err(ColorDoesNotExist);
