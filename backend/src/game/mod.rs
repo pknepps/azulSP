@@ -1,5 +1,4 @@
 use std::fmt::Display;
-use std::slice::Iter;
 use crate::game::tile::{ColoredTile, ColorDoesNotExist, Tile};
 
 pub mod bag;

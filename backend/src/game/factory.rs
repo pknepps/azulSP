@@ -1,10 +1,9 @@
 use crate::game::bag::Bag;
 use crate::game::tile::{ColoredTile, ColorDoesNotExist, Tile};
 use crate::game::center::Center;
-use crate::game::PickTiles;
+use crate::game::{DiscardTiles, PickTiles};
 use std::error::Error;
 use std::fmt::{Display, Formatter};
-use std::slice::Iter;
 
 // The max number of tiles a factory can hold.
 const FACTORY_MAX: usize = 4;
@@ -26,13 +25,14 @@ impl Error for FactoryNotEmpty {}
 /// to the scoring phase of the round, before filling up again.
 pub struct Factory {
     tiles: [Option<ColoredTile>; FACTORY_MAX],
+    center: Center,
 }
 
 impl Factory {
     /// Creates a new factory and fills it from the given bag.
-    pub fn new(bag: &mut Bag) -> Factory {
+    pub fn new(bag: &mut Bag, center: Center) -> Factory {
         let tiles = [None; FACTORY_MAX];
-        let mut factory = Factory { tiles, };
+        let mut factory = Factory { tiles, center, };
         factory.fill(bag).expect("Factory should be empty.");
         factory
     }
@@ -54,6 +54,17 @@ impl PickTiles for Factory {
     /// The remaining tiles are discarded to the given center.
     /// If no tiles of the given color exist, returns an error.
     fn pick(&mut self, tile: &ColoredTile) -> Result<Vec<Box<dyn Tile>>, ColorDoesNotExist> {
-        todo!();
+        let mut tiles: Vec<Box<dyn Tile>> = Vec::new();
+        while let Some(factory_tile) = self.tiles.pop() {
+            if factory_tile.is_color(tile.color()) {
+                tiles.push(factory_tile);
+            } else {
+                self.center.discard(factory_tile);
+            }
+        }
+        if tiles.is_empty() {
+            return Err(ColorDoesNotExist);
+        }
+        Ok(tiles)
     }
 }
