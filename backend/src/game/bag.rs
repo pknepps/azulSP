@@ -1,7 +1,6 @@
-use crate::game::tile::{self, ColoredTile};
+use crate::game::tile::Color;
 use rand::Rng;
 use strum::IntoEnumIterator;
-use crate::game::DiscardTiles;
 
 /// The number of tiles of a color that exist in the game.
 pub const MAX_TILES_OF_COLOR: usize = 20;
@@ -24,9 +23,8 @@ pub const MAX_TILES_OF_COLOR: usize = 20;
 /// bag.discard(tile);
 /// ```
 pub struct Bag {
-    tiles: Vec<ColoredTile>,
-    discard: Vec<ColoredTile>,
-
+    tiles: Vec<Color>,
+    discard: Vec<Color>,
 }
 
 impl Bag {
@@ -37,9 +35,9 @@ impl Bag {
         let tiles = Vec::with_capacity(MAX_TILES_OF_COLOR * 5);
         let mut discard = Vec::with_capacity(MAX_TILES_OF_COLOR * 5);
 
-        for color in tile::Color::iter() {
+        for color in Color::iter() {
             for _ in 0..MAX_TILES_OF_COLOR {
-                discard.push(ColoredTile::new(color.clone()));
+                discard.push(color.clone());
             }
         }
 
@@ -50,11 +48,16 @@ impl Bag {
 
     /// Draws a tile from the bag. If no tiles remain, shuffles the discard
     /// into the bag and draws a tile. If still no tiles remain, returns None.
-    pub fn draw(&mut self) -> Option<ColoredTile> {
+    pub fn draw(&mut self) -> Option<Color> {
         if self.tiles.is_empty() {
             self.shuffle();
         }
         self.tiles.pop()
+    }
+
+    /// Puts the given tile into the discard for reuse.
+    pub fn discard(&mut self, tile: Color) {
+        self.discard.push(tile);
     }
 
     /// Shuffles the discard into the bag.
@@ -68,12 +71,5 @@ impl Bag {
             let rnd_index = rand::thread_rng().gen_range(0..self.tiles.len());
             (self.tiles[i], self.tiles[rnd_index]) = (self.tiles[rnd_index], self.tiles[i]);
         }
-    }
-}
-
-impl DiscardTiles for Bag {
-    /// Puts the given tile into the discard for reuse.
-    fn discard(&mut self, tile: ColoredTile) {
-        self.discard.push(tile);
     }
 }

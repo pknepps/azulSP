@@ -1,5 +1,4 @@
-use std::fmt::Display;
-use crate::game::tile::{ColoredTile, ColorDoesNotExist, Tile};
+use crate::game::tile::{ColorDoesNotExist, Color, Tile};
 
 pub mod bag;
 pub mod board;
@@ -10,11 +9,5 @@ pub mod tile;
 /// Allows the user to pick tiles from a type of this trait.
 pub trait PickTiles {
     /// Picks all tiles of the given color.
-    fn pick(&mut self, tile: &ColoredTile) -> Result<Vec<Box<dyn Tile>>, ColorDoesNotExist>;
-}
-
-/// Allows the discard of a tile to a type of this trait.
-pub trait DiscardTiles {
-    /// Discards the given tile to self.
-    fn discard(&mut self, tile: ColoredTile);
+    fn pick(&mut self, tile: &Color) -> Result<Vec<Tile>, ColorDoesNotExist>;
 }
