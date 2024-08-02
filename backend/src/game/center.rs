@@ -1,4 +1,3 @@
-use crate::game::PickTiles;
 use crate::game::tile::{ColorDoesNotExist, Color, Tile};
 
 /// The center of the play area which contains the leftover tiles from
@@ -21,9 +20,7 @@ impl Center {
     pub fn discard(&mut self, tile: Tile) {
         self.tiles.push(tile);
     }
-}
 
-impl PickTiles for Center {
     /// Picks all tiles of the given color, adding on the first-player tile,
     /// if it exists.
     fn pick(&mut self, tile: &Color) -> Result<Vec<Tile>, ColorDoesNotExist> {
