@@ -1,8 +1,9 @@
-use crate::game::tile::{ColorDoesNotExist, Color, Tile};
 use crate::game::board::Board;
 use crate::game::factory::Factory;
 use crate::game::bag::Bag;
 use crate::game::center::Center;
+use serde_json;
+use serde::{Deserialize, Serialize};
 
 pub mod bag;
 pub mod board;
@@ -11,12 +12,14 @@ pub mod factory;
 pub mod tile;
 
 //Todo: impl Error
+#[derive(Debug)]
 pub enum GameCreationError {
     TooManyPlayers,
     NotEnoughPlayers,
 }
 
 /// Represents an individual game of azul.
+#[derive(Serialize, Deserialize)]
 pub struct Game {
     id: usize,
     bag: Bag,
@@ -61,9 +64,15 @@ impl Game {
             center,
         })
     }
+
+    pub async fn read_as_json(&self) -> serde_json::Result<String> {
+        Ok(serde_json::to_string(self)?)
+    }
 }
 
+
 /// A representation of a player which is stored in the database.
+#[derive(Serialize, Deserialize)]
 pub struct Player {
     id: String,
     board: Board,

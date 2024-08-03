@@ -1,7 +1,9 @@
+use serde::{Deserialize, Serialize};
 use crate::game::tile::{ColorDoesNotExist, Color, Tile};
 
 /// The center of the play area which contains the leftover tiles from
 /// factories as well as the first-player token until chosen from.
+#[derive(Serialize, Deserialize)]
 pub struct Center {
     tiles: Vec<Tile>,
 }

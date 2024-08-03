@@ -1,6 +1,8 @@
+use serde::{Deserialize, Serialize};
 use crate::game::tile::{Color, Tile};
 
 /// The board of a player. Used to hold tiles and keep track of score.
+#[derive(Serialize, Deserialize)]
 pub struct Board {
     pattern: Vec<Vec<Color>>,
     wall: [[Option<Color>; 5]; 5],

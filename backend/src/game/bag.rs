@@ -1,5 +1,6 @@
 use crate::game::tile::Color;
 use rand::Rng;
+use serde::{Deserialize, Serialize};
 use strum::IntoEnumIterator;
 
 /// The number of tiles of a color that exist in the game.
@@ -22,6 +23,7 @@ pub const MAX_TILES_OF_COLOR: usize = 20;
 ///
 /// bag.discard(tile);
 /// ```
+#[derive(Serialize, Deserialize)]
 pub struct Bag {
     tiles: Vec<Color>,
     discard: Vec<Color>,

@@ -3,6 +3,7 @@ use crate::game::tile::{Color, ColorDoesNotExist, Tile};
 use crate::game::center::Center;
 use std::error::Error;
 use std::fmt::{Display, Formatter};
+use serde::{Deserialize, Serialize};
 
 // The max number of tiles a factory can hold.
 const FACTORY_MAX: usize = 4;
@@ -22,6 +23,7 @@ impl Error for FactoryNotEmpty {}
 /// A factory holds 4 tiles which can be drafted by the players. A factory will
 /// pull its tiles from the bag. Once all factories are empty, the game will go
 /// to the scoring phase of the round, before filling up again.
+#[derive(Serialize, Deserialize)]
 pub struct Factory {
     tiles: [Option<Color>; FACTORY_MAX],
 }
@@ -41,7 +43,9 @@ impl Factory {
         if self.tiles.is_empty() {
             return Err(FactoryNotEmpty);
         }
-        self.tiles = [bag.draw(); 4];
+        for i in 0..4 {
+            self.tiles[i] = bag.draw();
+        }
         Ok(())
     }
 

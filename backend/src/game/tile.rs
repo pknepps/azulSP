@@ -1,10 +1,11 @@
 use std::error::Error;
 use std::fmt::{self, Display};
 use std::hash::Hash;
+use serde::{Deserialize, Serialize};
 use strum_macros::EnumIter;
 
 /// The possible colors of tiles.
-#[derive(PartialEq, Clone, Copy, EnumIter, Hash, Eq)]
+#[derive(PartialEq, Clone, Copy, EnumIter, Hash, Eq, Serialize, Deserialize)]
 pub enum Color {
     White,
     Black,
@@ -16,7 +17,7 @@ pub enum Color {
 /// The Tile is the main game piece. A tile can be 5 colors, represented by
 /// this enum. Throughout the game, tiles are drafted by players and used to
 /// score.
-#[derive(PartialEq)]
+#[derive(PartialEq, Serialize, Deserialize)]
 pub enum Tile {
     Colored(Color),
     FirstPlayer,
