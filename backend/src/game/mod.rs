@@ -65,7 +65,7 @@ impl Game {
         })
     }
 
-    pub async fn read_as_json(&self) -> serde_json::Result<String> {
+    pub fn read_as_json(&self) -> serde_json::Result<String> {
         Ok(serde_json::to_string(self)?)
     }
 }
