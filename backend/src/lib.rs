@@ -14,9 +14,12 @@ lazy_static! {
 }
 
 pub async fn start() {
-    let app = Router::new().route("/game", get(get_state));
+    let app = Router::new()
+        .route("/players.json", get(get_players))
+        .route("/factories.json", get(get_factories))
+        .route("/center.json", get(get_center));
 
-    let listener = tokio::net::TcpListener::bind("127.0.0.1:8080")
+    let listener = tokio::net::TcpListener::bind("127.0.0.1:8000")
         .await
         .unwrap();
     println!("listening on {}", listener.local_addr().unwrap());
@@ -24,8 +27,25 @@ pub async fn start() {
 }
 
 #[debug_handler]
-pub async fn get_state() -> impl IntoResponse {
-    let json = GAME.lock().unwrap().read_as_json();
+pub async fn get_players() -> impl IntoResponse {
+    let json = serde_json::to_string(GAME.lock().unwrap().players());
+    match json {
+        Ok(json) => (StatusCode::OK, json).into_response(),
+        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
+    }
+}
+
+#[debug_handler]
+pub async fn get_factories() -> impl IntoResponse {
+    let json = serde_json::to_string(GAME.lock().unwrap().factories());
+    match json {
+        Ok(json) => (StatusCode::OK, json).into_response(),
+        Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),
+    }
+}
+#[debug_handler]
+pub async fn get_center() -> impl IntoResponse {
+    let json = serde_json::to_string(GAME.lock().unwrap().center());
     match json {
         Ok(json) => (StatusCode::OK, json).into_response(),
         Err(error) => (StatusCode::INTERNAL_SERVER_ERROR, error.to_string()).into_response(),

@@ -1,6 +1,7 @@
 import styles from "@/app/ui/gameCenter.module.css"
 import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
+import {Factory as TileFactory, Center} from "@/app/game/Game"
 import {FirstPlayerSquareTile} from "@/app/ui/Tile/tile";
 import {SquareTileBag} from "@/app/tilebag/SquareTileBag";
 import {TileBag} from "@/app/tilebag/TileBag";
@@ -13,12 +14,11 @@ import {TileBag} from "@/app/tilebag/TileBag";
  * @param props The elements to place along the radius of the center component.
  * @returns An html element which describes a ring of elements.
  */
-export function GameCenter(props : number[]) : ReactElement | null {
+export function GameCenter(tileFactories : TileFactory[], center: Center) : ReactElement | null {
     let cnt = 0;
-    let tileBag: TileBag = new SquareTileBag();
-    const factories : ReactNode[] = props.map(() : ReactNode => {
-        const angle = cnt++ * (2 * Math.PI) / props.length + 3 * Math.PI / 2;
-        return Factory(tileBag.drawTile, angle);
+    const factories : ReactNode[] = tileFactories.map(factory => {
+        const angle = cnt++ * (2 * Math.PI) / tileFactories.length + 3 * Math.PI / 2;
+        return Factory(factory, angle);
     });
     return (<div className={styles.gameCenter}>
         {factories}

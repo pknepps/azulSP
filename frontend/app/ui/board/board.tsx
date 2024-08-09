@@ -2,6 +2,7 @@ import styles from "./board.module.css";
 import {ReactElement} from "react";
 import {TileColor} from "@/app/ui/Tile/TileColor";
 import {SquareTile} from "@/app/ui/Tile/tile"
+import {Board} from "@/app/game/Game";
 
 /**
  * A player's board. Each player has their own board with identical walls, patterns and floor. The
@@ -10,7 +11,7 @@ import {SquareTile} from "@/app/ui/Tile/tile"
  * scoring phase count as negative points. A player can never drop below zero points.
  * @returns A board with 4 sections. The player's score, pattern lines, wall, and floor.
  */
-export default function SquareBoard() : ReactElement | null{
+export default function SquareBoard(board: Board) : ReactElement | null{
     let makePattern = () : Array<ReactElement | null> => {
         let tiles = new Array<ReactElement | null>();
         for (let i = 1; i <= 5; i++) {

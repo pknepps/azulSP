@@ -1,6 +1,9 @@
 import {ReactElement} from "react";
 import styles from "./factory.module.css";
 import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
+import {Factory as TileFactory} from "@/app/game/Game"
+import {TileColor} from "@/app/ui/Tile/TileColor";
+import {SquareTile} from "@/app/ui/Tile/tile";
 
 /**
  * A board element which holds 4 tiles. The tiles on a factory have yet to be drafted, and once one
@@ -12,8 +15,7 @@ import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
  * @param angle The angle to place this factory on.
  * @returns An html element which holds 4 tiles.
  */
-export default function Factory(pickTiles : (row: number, col: number) => (ReactElement | null),
-                                angle : number) : ReactElement | null {
+export default function Factory(factory: TileFactory, angle : number) : ReactElement | null {
 
     const {width, height} = useWindowDimensions();
 
@@ -26,9 +28,10 @@ export default function Factory(pickTiles : (row: number, col: number) => (React
     const horizontalOffset = width / 2;
 
     const coordinates: [number, number][] = [[1, 1], [1, 2], [2, 1], [2, 2]];
-    const tiles = coordinates .map(
-        (coordinate : [number, number]) : ReactElement | null =>
-            pickTiles(coordinate[0], coordinate[1]));
+    const tiles: (ReactElement | null)[] = [];
+    for (let i = 0; i < coordinates.length; i++) {
+        tiles.push(SquareTile(factory.tiles[i], coordinates[i][0], coordinates[i][1]));
+    }
 
     return (<div className={styles.factory}
                 style = {{position: "absolute",
@@ -38,4 +41,8 @@ export default function Factory(pickTiles : (row: number, col: number) => (React
             {tiles}
         </div>
     </div>);
+}
+
+function placeTile(color: TileColor, coordinates: [number, number]) {
+
 }

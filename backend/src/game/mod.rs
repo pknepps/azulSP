@@ -65,8 +65,16 @@ impl Game {
         })
     }
 
-    pub fn read_as_json(&self) -> serde_json::Result<String> {
-        Ok(serde_json::to_string(self)?)
+    pub fn players(&self) -> &Vec<Player> {
+        &self.players
+    }
+
+    pub fn factories(&self) -> &Vec<Factory> {
+        &self.factories
+    }
+
+    pub fn center(&self) -> &Center {
+        &self.center
     }
 }
 
