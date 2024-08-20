@@ -10,7 +10,7 @@ use axum_macros::debug_handler;
 pub mod game;
 
 lazy_static! {
-    static ref GAME: Mutex<Game> = Mutex::new(Game::build(0, vec!["Preston", "Jude", "Michelle", "Ben"]).unwrap());
+    static ref GAME: Mutex<Game> = Mutex::new(Game::build(0, vec![0, 1, 2, 3]).unwrap());
 }
 
 pub async fn start() {

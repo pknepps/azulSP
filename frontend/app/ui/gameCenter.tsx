@@ -3,8 +3,6 @@ import {ReactElement, ReactNode} from "react";
 import Factory from "@/app/ui/Factory/factory";
 import {Factory as TileFactory, Center} from "@/app/game/Game"
 import {FirstPlayerSquareTile} from "@/app/ui/Tile/tile";
-import {SquareTileBag} from "@/app/tilebag/SquareTileBag";
-import {TileBag} from "@/app/tilebag/TileBag";
 
 /**
  * The center of the game. The center contains all tiles which have yet to be drafted. These tiles

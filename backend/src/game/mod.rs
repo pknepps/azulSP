@@ -31,7 +31,7 @@ pub struct Game {
 impl Game {
     /// Creates a new game from the given player id's up to a maximum of
     /// 4 players.
-    pub fn build(game_id: usize, player_ids: Vec<&str>) -> Result<Self, GameCreationError> {
+    pub fn build(game_id: usize, player_ids: Vec<u32>) -> Result<Self, GameCreationError> {
         if player_ids.len() < 2 {
             return Err(GameCreationError::NotEnoughPlayers);
         }
@@ -45,8 +45,10 @@ impl Game {
 
         // Should perform a database query, but for now, just creates new players
         let mut players = Vec::new();
+        // todo, replace temp_names with database query.
+        let temp_names = ["Preston", "Jude", "Michelle", "Ben"];
         for id in player_ids {
-            players.push(Player::new(id, Board::new()));
+            players.push(Player::new(id, temp_names[id as usize], Board::new()));
         }
 
         let mut factories = Vec::new();
@@ -82,15 +84,17 @@ impl Game {
 /// A representation of a player which is stored in the database.
 #[derive(Serialize, Deserialize)]
 pub struct Player {
-    id: String,
+    id: u32,
+    name: String,
     board: Board,
 }
 
 impl Player {
     /// Creates a new player from the given id and board.
-    pub fn new(id: &str, board: Board) -> Self {
+    pub fn new(id: u32, name: &str, board: Board) -> Self {
         Player {
-            id: String::from(id),
+            id,
+            name: String::from(name),
             board,
         }
     }
