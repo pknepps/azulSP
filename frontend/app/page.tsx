@@ -4,16 +4,18 @@ import styles from "./page.module.css";
 import {GameCenter} from "@/app/ui/gameCenter"
 import {ReactElement, useEffect, useState} from "react";
 import SquareBoard from "@/app/ui/board/board";
-import {Player, Factory, defaultCenter, Center} from "@/app/game/Game";
+import {Player, defaultPlayer, Factory, defaultFactory, defaultCenter, Center} from "@/app/game/Game";
+import {useWindowDimensions} from "@/app/ui/customHooks/useWindowDimensions";
 
 export default function Home() : ReactElement | null {
-    const [players, setPlayers] = useState(new Array<Player>());
-    const [factories, setFactories] = useState(new Array<Factory>());
+    const [players, setPlayers] = useState(new Array<Player>(4).fill(defaultPlayer()));
+    const [factories, setFactories] = useState(new Array<Factory>(5).fill(defaultFactory()));
     const [center, setCenter] = useState(defaultCenter());
     const [status, setStatus] = useState<'pending' | 'success' | 'error'>(
         'pending'
     );
     const [error, setError] = useState<Error>();
+    const {width, height} = useWindowDimensions();
     console.log("checkpoint 0");
     useEffect(() => {
         async function fetch() {
@@ -38,10 +40,6 @@ export default function Home() : ReactElement | null {
         }
         fetch();
     }, []);
-    if (status === 'pending') {
-        console.log('loading');
-        return <h1>Loading...</h1>;
-    }
     if (status === 'error') {
         console.log('error');
         return <h1>Error: {error?.message}</h1>;
@@ -53,7 +51,7 @@ export default function Home() : ReactElement | null {
                     {SquareBoard(players[0].board)}
                     {SquareBoard(players[1].board)}
                 </div>
-                {GameCenter(factories, center)}
+                {GameCenter(factories, center, width, height)}
                 <div className={styles.side} style={{alignContent:"flex-end"}}>
                     {SquareBoard(players[2].board)}
                     {SquareBoard(players[3].board)}
@@ -65,9 +63,9 @@ export default function Home() : ReactElement | null {
 
 async function getPlayers(): Promise<Player[]> {
     const headers: Headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Accept", "application/json");
-    const request: RequestInfo = new Request('https://localhost:8000/players.json', {
+    headers.append("Origin", "http://localhost:3000");
+    headers.append("Access-Control-Request-Method", "GET");
+    const request: RequestInfo = new Request('http://localhost:8000/players.json', {
         method: 'GET',
         headers: headers,
     });
@@ -78,9 +76,9 @@ async function getPlayers(): Promise<Player[]> {
 
 async function getFactories(): Promise<Factory[]> {
     const headers: Headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Accept", "application/json");
-    const request: RequestInfo = new Request('https://localhost:8000/factories.json', {
+    headers.append("Origin", "http://localhost:3000");
+    headers.append("Access-Control-Request-Method", "GET");
+    const request: RequestInfo = new Request('http://localhost:8000/factories.json', {
         method: 'GET',
         headers: headers,
     });
@@ -91,9 +89,9 @@ async function getFactories(): Promise<Factory[]> {
 
 async function getCenter(): Promise<Center> {
     const headers: Headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Accept", "application/json");
-    const request: RequestInfo = new Request('https://localhost:8000/center.json', {
+    headers.append("Origin", "http://localhost:3000");
+    headers.append("Access-Control-Request-Method", "GET");
+    const request: RequestInfo = new Request('http://localhost:8000/center.json', {
         method: 'GET',
         headers: headers,
     });

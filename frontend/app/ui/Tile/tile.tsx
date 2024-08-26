@@ -15,14 +15,13 @@ export function SquareTile(color : TileColor | undefined, column : number, row :
     if (color === undefined) {
         color = TileColor.empty;
     }
-    const [isDisabled, setDisabled] = useState(disabled);
     return (<button onClick={() => alert("my color is: " + color)}
                    className={styles.squareTile}
                    style={{backgroundColor: color,
                        gridColumnStart: column,
                        gridRowStart: row,
                        }} key={color}
-                   disabled={isDisabled}></button>);
+                   disabled={disabled}></button>);
 }
 
 /**

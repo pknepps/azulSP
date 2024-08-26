@@ -1,4 +1,4 @@
-import {useState, useEffect} from "react";
+import {useState, useEffect, EffectCallback, DependencyList, useRef} from "react";
 
 /** If a window to view exists. */
 const hasWindow = typeof window !== 'undefined';
@@ -11,16 +11,20 @@ const hasWindow = typeof window !== 'undefined';
  */
 export function useWindowDimensions() : {width: number | null, height: number | null} {
     const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
-    useEffect(() => {
-        if (typeof window !== "undefined") {
-            let handleResize = () => {
-                setWindowDimensions(getWindowDimensions());
-            }
+    try {
+        useEffect(() => {
+            if (typeof window !== "undefined") {
+                let handleResize = () => {
+                    setWindowDimensions(getWindowDimensions());
+                }
 
-            window.addEventListener('resize', handleResize);
-            return () => window.removeEventListener('resize', handleResize);
-        }
-    }, []);
+                window.addEventListener('resize', handleResize);
+                return () => window.removeEventListener('resize', handleResize);
+            }
+        }, []);
+    } catch (e) {
+        console.log(e);
+    }
     return windowDimensions;
 }
 

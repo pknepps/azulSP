@@ -12,11 +12,11 @@ import {FirstPlayerSquareTile} from "@/app/ui/Tile/tile";
  * @param props The elements to place along the radius of the center component.
  * @returns An html element which describes a ring of elements.
  */
-export function GameCenter(tileFactories : TileFactory[], center: Center) : ReactElement | null {
+export function GameCenter(tileFactories : TileFactory[], center: Center, width: number | null, height: number | null) : ReactElement | null {
     let cnt = 0;
     const factories : ReactNode[] = tileFactories.map(factory => {
         const angle = cnt++ * (2 * Math.PI) / tileFactories.length + 3 * Math.PI / 2;
-        return Factory(factory, angle);
+        return Factory(factory, angle, width, height);
     });
     return (<div className={styles.gameCenter}>
         {factories}

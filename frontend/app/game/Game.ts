@@ -1,4 +1,5 @@
 import {TileColor} from "@/app/ui/Tile/TileColor";
+import {FirstPlayerSquareTile} from "@/app/ui/Tile/tile";
 
 export interface Player {
     id: number;
@@ -6,8 +7,8 @@ export interface Player {
     board: Board;
 }
 
-function defaultPlayer(): Player {
-    return {id: 0, name: "", board: defaultBoard()} as Player;
+export function defaultPlayer(): Player {
+    return {id: 0, name: "Player", board: defaultBoard()} as Player;
 }
 
 export interface Board {
@@ -19,8 +20,8 @@ export interface Board {
 
 function defaultBoard(): Board {
     return {
-        pattern: new Array<Array<TileColor | null>>(),
-        wall: new Array<Array<TileColor | null>>(),
+        pattern: new Array<Array<TileColor | null>>(5).fill(new Array<TileColor | null>(5).fill(null)),
+        wall: new Array<Array<TileColor | null>>(5).fill(new Array<TileColor | null>(5).fill(null)),
         floor: new Array<TileColor | FirstPlayerTile>(),
         score: 0,
     } as Board;
@@ -30,8 +31,8 @@ export interface Factory {
     tiles: (TileColor | undefined)[];
 }
 
-function defaultFactory(): Factory {
-    return {tiles: new Array<TileColor | undefined>} as Factory
+export function defaultFactory(): Factory {
+    return {tiles: new Array<TileColor | undefined>(4).fill(TileColor.black)} as Factory
 }
 
 export interface Center {
@@ -39,7 +40,7 @@ export interface Center {
 }
 
 export function defaultCenter(): Center {
-    return {tiles: []} as Center
+    return {tiles: [{}]} as Center
 }
 
 export interface FirstPlayerTile {}

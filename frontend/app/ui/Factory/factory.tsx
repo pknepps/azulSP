@@ -15,9 +15,8 @@ import {SquareTile} from "@/app/ui/Tile/tile";
  * @param angle The angle to place this factory on.
  * @returns An html element which holds 4 tiles.
  */
-export default function Factory(factory: TileFactory, angle : number) : ReactElement | null {
+export default function Factory(factory: TileFactory, angle : number, width: number | null, height: number | null) : ReactElement | null {
 
-    const {width, height} = useWindowDimensions();
 
     if (width == null || height == null) {
         return <div></div>;
